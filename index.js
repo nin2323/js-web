@@ -16,8 +16,8 @@ const perricosArray = [
       const htmlAdd = `<div class="card">
     <img src="${dogImage}" alt="Perro" />
     <br />
-    <p>❤️ <span id="like-count-${index}">0</span> 🤮</p>
-    <button class="btn-preciosisimo" data-index=${index}>Preciosísimo</button> <button>Feísisimo</button>
+    <p>❤️ <span id="like-count-${index}">0</span>🤮 <span id="like-count-span-${index}">0</span></p>
+    <button class="btn-preciosisimo" data-index=${index}>Preciosísimo</button> <button class="btn-feisisimo" data-index=${index}>Feísisimo</button>
   </div>`;
   
       console.log('innerHtml posición', index, dogList.innerHTML);
@@ -31,7 +31,14 @@ const perricosArray = [
             likeCount.textContent = parseInt(likeCount.textContent) + 1;
         });
       });
-  }
+    document.querySelectorAll('.btn-feisisimo').forEach(button => {
+      button.addEventListener('click', function() {
+        const index = button.getAttribute('data-index');
+        const likeCountSpan = document.querySelector(`#like-count-span-${index}`);
+        likeCountSpan.textContent = parseInt(likeCountSpan.textContent) + 1;
+      });
+    });
+  };
   
   const addPerrico = async () => {
     const perricoImg = await getRandomDogImage();
