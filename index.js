@@ -3,7 +3,7 @@ const perricosArray = [
     'https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg'
   ];
   console.log(perricosArray);
-  // cxreamos un objeto por cada perrico de nuestro array donde gusradamos los likes y los dislikes
+  // cxreamos un objeto por cada perrico de nuestro array donde guardamos los likes y los dislikes
   const likesPerrico = perricosArray.map(() => ({
     likes: 0,
     dislikes: 0
@@ -54,7 +54,7 @@ function renderPerricoArray() {
   perricosArray.forEach((dogImage, index) => {
     renderPerrico(dogImage, dogList, index);
 });
-}
+};
 
 
 // Añadir un perrico al final
@@ -65,8 +65,8 @@ const addPerrico = async () => {
   const dogList = document.querySelector('#dog-list');
   renderPerrico(perricoImg, dogList, perricosArray.length - 1);
 };
+document.querySelector('#add-1-perrico').addEventListener('click', () => addPerrico());
 
-  document.querySelector('#add-1-perrico-first').addEventListener('click', () => addPerricoFirst());
 
 // Añadir un perrico al principio
 const addPerricoFirst = async () => {
@@ -75,8 +75,8 @@ const addPerricoFirst = async () => {
   likesPerrico.unshift({ likes: 0, dislikes: 0 }); // Añadimos datos al principio
   renderPerricoArray(); // Re-renderizamos todo para mantener el orden
 };
+document.querySelector('#add-1-perrico-first').addEventListener('click', () => addPerricoFirst());
 
-  document.querySelector('#add-1-perrico').addEventListener('click', () => addPerrico());
 
 // Añadir múltiples perricos
 const addMultiplePerricos = async (count) => {
