@@ -15,7 +15,7 @@ function renderPerrico(dogImage, dogList, index) {
       `<div class="card" id="card-${index}">
         <img src="${dogImage}" alt="Perro" />
         <br />
-        <p><span class="like-count">${likesPerrico[index].likes}</span>❤️ 🤮<span class="dislike-count">${likesPerrico[index].likes}</span></p>
+        <p><span class="like-count">${likesPerrico[index].likes}</span>❤️ 🤮<span class="dislike-count">${likesPerrico[index].dislikes}</span></p>
         <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
       </div>`;
 
@@ -89,19 +89,19 @@ const addMultiplePerricos = async (count) => {
 
 
 // Filtrar perricos con likes y guardarlos en un array
-function getPerricosWithLikes() {
-  const likedPerricos = perricosArray.filter((_, index) => likesPerrico[index].likes > 0);
-  console.log('Perricos con likes:', likedPerricos);
-  return likedPerricos;
-}
+// function getPerricosWithLikes() {
+//   const likedPerricos = perricosArray.filter((_, index) => likesPerrico[index].likes > 0);
+//   console.log('Perricos con likes:', likedPerricos);
+//   return likedPerricos;
+// }
 
-  document.querySelector('#perricos-preciosisimos').addEventListener('click', () => getPerricosWithLikes());
+  
 
 // Pintar los perritos con likes
 function renderLikedPerricos() {
+  const likedPerricos = perricosArray.filter((_, index) => likesPerrico[index].likes > 0);
   const dogList = document.querySelector('#dog-list'); 
   dogList.innerHTML = ''; 
-
   likedPerricos.forEach((dogImage, index) => {
     // Renderiza una tarjeta para cada perrito con likes
     const htmlAdd = `
@@ -113,10 +113,15 @@ function renderLikedPerricos() {
     `;
     dogList.innerHTML += htmlAdd;
   });
-}
+};
 
-// Renderizar los perricos iniciales
+// Renderizar los perricos inicialesdo
+
 renderPerricoArray();
+document.querySelector('#perricos-preciosisimos').addEventListener('click', () => renderLikedPerricos());
+
+
+
   
   
 
