@@ -42,3 +42,7 @@ img {
   max-height: 150px;
 }
 
+.button-selected {
+  background-color: blue;
+  color: white;
+}
