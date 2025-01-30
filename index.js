@@ -38,7 +38,7 @@ function renderPerrico(dogImage, dogList, index) {
   });
 
   //votar feisimo
-  document.querySelectorAll('.dislike').forEach((buttonNode, index) => {
+  document.querySelectorAll('.dislike').forEach(buttonNode => {
     buttonNode.addEventListener('click', function () {
       likesPerrico[index].dislikes++;
       const dislikeCountNodes = document.querySelectorAll('.dislike-count')[index];
@@ -73,7 +73,7 @@ const addPerricoFirst = async () => {
   const perricoImg = await getRandomDogImage();
   perricosArray.unshift(perricoImg);
   likesPerrico.unshift({ likes: 0, dislikes: 0 }); // Añadimos datos al principio
-  renderPerricoArray(); // Renderizamos todo para mantener el orden
+  renderPerricoArray(); // Re-renderizamos todo para mantener el orden
 };
 document.querySelector('#add-1-perrico-first').addEventListener('click', () => addPerricoFirst());
 
@@ -96,6 +96,7 @@ const addMultiplePerricos = async (count) => {
 // }
 
   
+
 // Pintar los perritos con likes
 function renderLikedPerricos() {
   const likedPerricos = perricosArray.filter((_, index) => likesPerrico[index].likes > 0);
@@ -113,12 +114,21 @@ function renderLikedPerricos() {
     dogList.innerHTML += htmlAdd;
   });
 };
+
 // Renderizar los perricos inicialesdo
+
 renderPerricoArray();
-document.querySelector('#perricos-preciosisimos').addEventListener('click', () => renderLikedPerricos());
+document.querySelector('#perricos-preciosisimos').addEventListener('click', function () {
+  renderLikedPerricos()
+  this.classList.toggle('button-selected');
+});
 
 
 
+  
+  
+
+  
   
 
   
