@@ -18,28 +18,52 @@ function getRandomInt(min, max) {
     }
     return randomTasks;
   }
+
   
   // Estas funciones serán las que iremos cambiando con los ejemplos
   function regenerateArray() {
     const tasks = getRandomArray();
-    let newTasksHTML = '';
-  
+    document.querySelector('#tasks').innerHTML = '';
+    
     tasks.forEach((task) => {
-      newTasksHTML += `
-       <div class="task">
-          <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
-          <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
-        </div>`;
+      createTaskNode(task, true);
     });
-    document.querySelector('#tasks').innerHTML = newTasksHTML;
   }
   
-  function addFirst() {
+function createTaskNode(task, addToEnd) {
+  const taskNode = document.createElement('div');
+  taskNode.className = 'task';
+  taskNode.innerHTML = `
+    <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
+    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>`;
+
+  const tasksNode = document.querySelector('#tasks');
+
+  if(addToEnd) {
+    tasksNode.appendChild(taskNode);
+  } else {
+    tasksNode.prepend(taskNode);
   }
 
-  
-  
-  function addLast() {}
+  taskNode.addEventListener('click', function () {
+    console.log('hola', task.text);
+  });
+}
+
+
+  function addTask(addToEnd) {
+    const task = generateRandomTask();
+    addTask(task, addToEnd)  
+  };
+
+  // function addLast() {
+  //   const task = generateRandomTask();
+  //       const taskHtml = `<div class="task">
+  //         <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
+  //         <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
+  //       </div>`
+  //       document.querySelector('#tasks').innerHTML =  document.querySelector('#tasks').innerHTML + taskHtml;
+  // }
   
   // event listeners para que los botones llamen a las funciones anteriores
   document.querySelector('#regenate').addEventListener('click', () => {
@@ -47,9 +71,9 @@ function getRandomInt(min, max) {
   });
   
   document.querySelector('#add-first').addEventListener('click', () => {
-    addFirst();
+    addTask(false);
   });
   
   document.querySelector('#add-last').addEventListener('click', () => {
-    addLast();
+    addTask(true);
   });
