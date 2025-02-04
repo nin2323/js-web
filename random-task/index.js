@@ -7,7 +7,8 @@ function getRandomInt(min, max) {
   function generateRandomTask() {
     return {
       text: `Texto aleatorio número ${getRandomInt(1, 1000)}`,
-      isCompleted: getRandomInt(0, 1) === 1
+      isCompleted: getRandomInt(0, 1) === 1,
+      isFav: getRandomInt(0, 1) === 1
     };
   }
   
@@ -35,7 +36,8 @@ function createTaskNode(task, addToEnd) {
   taskNode.className = 'task';
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
-    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>`;
+    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
+    <button class="${task.isFav ? 'fav' : ''}" style="display:none">${task.isFav ? '💝' : '💔'}</button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -48,6 +50,24 @@ function createTaskNode(task, addToEnd) {
   taskNode.addEventListener('click', function () {
     console.log('hola', task.text);
   });
+
+  taskNode.addEventListener('click', () => {
+    const taskTextNode = taskNode.querySelector('span');
+    const isCompleted = taskTextNode.classList.contains('completed');
+    taskTextNode.classList.toggle('completed');
+    taskNode.querySelector('.status').innerText = isCompleted ? 'pending' : 'completed';
+  });
+
+  taskNode.querySelector('button').addEventListener('click', (event) => {  // even para parar el evento del listener
+    const buttonSelected = taskNode.querySelector('button');
+    const isFav = buttonSelected.classList.contains('fav');
+    event.stopPropagation();    // para parar el evento del listener
+    buttonSelected.classList.toggle('fav');
+    buttonSelected.innerText = isFav ? '💝' : '💔';
+  });
+  
+  taskNode.querySelector('button')
+
 }
 
 
@@ -77,3 +97,6 @@ function createTaskNode(task, addToEnd) {
   document.querySelector('#add-last').addEventListener('click', () => {
     addTask(true);
   });
+
+ 
+  

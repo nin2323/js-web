@@ -67,6 +67,7 @@ const addPerrico = async (addToStart) => {
   } else {
     perricosArray.push(perricoImg);
   }
+  
 
   const dogList = document.querySelector('#dog-list');
 
@@ -74,6 +75,7 @@ const addPerrico = async (addToStart) => {
 
   const cardNode = document.createElement('div');
   cardNode.className = 'card';
+  cardNode.style.display = isAnyFilterSelected ? 'none' : '';
 
   cardNode.innerHTML = ` <img src="${perricoImg}" alt="Perro" />
   <br />
@@ -93,6 +95,7 @@ const addPerrico = async (addToStart) => {
     dogList.appendChild(cardNode); // usar appendchild para ponerlo al final
   }
   addSocialListeners();
+
 };
 
 document.querySelector('#add-1-perrico').addEventListener('click', function () {
