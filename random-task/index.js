@@ -53,7 +53,7 @@ function createTaskNode(task, addToEnd) {
 
   function addTask(addToEnd) {
     const task = generateRandomTask();
-    addTask(task, addToEnd)  
+    createTaskNode(task, addToEnd);  
   };
 
   // function addLast() {
