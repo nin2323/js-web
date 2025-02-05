@@ -37,7 +37,7 @@ function createTaskNode(task, addToEnd) {
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
-    <button class="${task.isFav ? 'fav' : ''}" style="display:none">${task.isFav ? '💝' : '💔'}</button>`;
+    <button class="${task.isFav ? 'fav' : ''} like_btn" style="display:none">${task.isFav ? '💝' : '💔'}</button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -66,7 +66,15 @@ function createTaskNode(task, addToEnd) {
     buttonSelected.innerText = isFav ? '💝' : '💔';
   });
   
-  taskNode.querySelector('button')
+  const icon = taskNode.querySelector('.like_btn');
+
+  taskNode.addEventListener('mouseover', () => {
+    icon.style.display = 'block';
+  });
+
+  taskNode.addEventListener('mouseout', () => {
+    icon.style.display = 'none';
+  });
 
 }
 

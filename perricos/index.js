@@ -94,7 +94,22 @@ const addPerrico = async (addToStart) => {
   } else {
     dogList.appendChild(cardNode); // usar appendchild para ponerlo al final
   }
-  addSocialListeners();
+  
+  const likeButton = cardNode.querySelector('.like');
+
+  likeButton.addEventListener('click', function () {
+    const hermanico = likeButton.previousElementSibling;
+    const likeCountNode = hermanico.querySelector('.like-count');
+    likeCountNode.innerText = Number(likeCountNode.innerText) + 1;
+  });
+
+  const dislikeButton = cardNode.querySelector('.dislike');
+
+  dislikeButton.addEventListener('click', function () {
+    console.log(dislikeButton.closest('.card'));
+    const likeCountNode = dislikeButton.closest('.card').querySelector('.dislike-count');
+    likeCountNode.innerText = Number(likeCountNode.innerText) + 1;
+  });
 
 };
 
