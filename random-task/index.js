@@ -69,15 +69,16 @@ function createTaskNode(task, addToEnd) {
   const icon = taskNode.querySelector('.like_btn');
 
   taskNode.addEventListener('mouseover', () => {
-    icon.style.display = 'block';
+    icon.style.display = '';
   });
 
   taskNode.addEventListener('mouseout', () => {
     icon.style.display = 'none';
   });
+  
+ 
 
 }
-
 
   function addTask(addToEnd) {
     const task = generateRandomTask();
@@ -106,5 +107,25 @@ function createTaskNode(task, addToEnd) {
     addTask(true);
   });
 
+document.querySelector('#create-task').addEventListener('submit', (event) => {
+  console.log(event);
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const taskText = formData.get('taskText');
+  const task = {
+    text: taskText,
+    isFav: false,
+    isCompleted: false
+  };
+});
  
+const button = document.querySelector('#state')
+const input = document.querySelector('#ruperto')
+document.querySelector(['name=taskText']).addEventListener('input', () => {
+  
+  if (input.length > 0) {
+    button.disabled = true;
+  } button.disabled = false;
+});
   
