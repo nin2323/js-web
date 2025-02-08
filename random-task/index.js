@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.reverse().forEach((task) => {   // con el reverse recorro el array al reves para que me las pinte en el orden que quiero
+    createTaskNode(task, true); 
+  });
+});
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -9,6 +16,7 @@ function getRandomInt(min, max) {
       text: `Texto aleatorio número ${getRandomInt(1, 1000)}`,
       isCompleted: getRandomInt(0, 1) === 1,
       isFav: getRandomInt(0, 1) === 1
+
     };
   }
   
@@ -75,9 +83,6 @@ function createTaskNode(task, addToEnd) {
   taskNode.addEventListener('mouseout', () => {
     icon.style.display = 'none';
   });
-  
- 
-
 }
 
   function addTask(addToEnd) {
@@ -107,6 +112,7 @@ function createTaskNode(task, addToEnd) {
     addTask(true);
   });
 
+  const formButton = document.querySelector('#create-task button');
 document.querySelector('#create-task').addEventListener('submit', (event) => {
   console.log(event);
   event.preventDefault();
@@ -116,16 +122,21 @@ document.querySelector('#create-task').addEventListener('submit', (event) => {
   const task = {
     text: taskText,
     isFav: false,
-    isCompleted: false
+    isCompleted: false,
+    id: Date.now()
   };
+  createTaskNode(task, false);
+
+  event.target.reset();
+  formButton.disabled = true;
+
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || []; // si existe una tarea con clave 'tasks' me la devuelve, sino me da un array vacio
+  tasks.push(task);  // con el push conseguimos que se pueda añadir otra tarea sin sobrescribir la anterior
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 });
  
-const button = document.querySelector('#state')
-const input = document.querySelector('#ruperto')
-document.querySelector(['name=taskText']).addEventListener('input', () => {
-  
-  if (input.length > 0) {
-    button.disabled = true;
-  } button.disabled = false;
+const taskTextNode = document.querySelector('[name=taskText]');
+taskTextNode.addEventListener('input', function (event) {
+  formButton.disabled = event.target.value === '';
 });
-  
