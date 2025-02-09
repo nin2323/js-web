@@ -15,8 +15,8 @@ function getRandomInt(min, max) {
     return {
       text: `Texto aleatorio número ${getRandomInt(1, 1000)}`,
       isCompleted: getRandomInt(0, 1) === 1,
-      isFav: getRandomInt(0, 1) === 1
-
+      isFav: getRandomInt(0, 1) === 1,
+      id: Date.now()
     };
   }
   
@@ -42,6 +42,7 @@ function getRandomInt(min, max) {
 function createTaskNode(task, addToEnd) {
   const taskNode = document.createElement('div');
   taskNode.className = 'task';
+  taskNode.dataset.id = task.id;  // guardamos el id en el dataset
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
@@ -59,11 +60,20 @@ function createTaskNode(task, addToEnd) {
     console.log('hola', task.text);
   });
 
+  function updateTaskStorage (taskId, updates) {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId ? {...task, ...updates} : task   // si el id de la tarea coincide, entonces copiamos los datos de la tarea que no han cambiado y actualizamos los atos que han cambiado. Si el id no coincide deja la tarea como estaba. 
+    );
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  };
+
   taskNode.addEventListener('click', () => {
     const taskTextNode = taskNode.querySelector('span');
     const isCompleted = taskTextNode.classList.contains('completed');
     taskTextNode.classList.toggle('completed');
     taskNode.querySelector('.status').innerText = isCompleted ? 'pending' : 'completed';
+    updateTaskStorage(task.id, { isCompleted: !isCompleted });    
   });
 
   taskNode.querySelector('button').addEventListener('click', (event) => {  // even para parar el evento del listener
@@ -72,6 +82,7 @@ function createTaskNode(task, addToEnd) {
     event.stopPropagation();    // para parar el evento del listener
     buttonSelected.classList.toggle('fav');
     buttonSelected.innerText = isFav ? '💝' : '💔';
+    updateTaskStorage(task.id, { isFav });
   });
   
   const icon = taskNode.querySelector('.like_btn');
@@ -85,10 +96,13 @@ function createTaskNode(task, addToEnd) {
   });
 }
 
+
   function addTask(addToEnd) {
     const task = generateRandomTask();
     createTaskNode(task, addToEnd);  
   };
+
+
 
   // function addLast() {
   //   const task = generateRandomTask();
@@ -100,17 +114,17 @@ function createTaskNode(task, addToEnd) {
   // }
   
   // event listeners para que los botones llamen a las funciones anteriores
-  document.querySelector('#regenate').addEventListener('click', () => {
-    regenerateArray();
-  });
+  // document.querySelector('#regenate').addEventListener('click', () => {
+  //   regenerateArray();
+  // });
   
-  document.querySelector('#add-first').addEventListener('click', () => {
-    addTask(false);
-  });
+  // document.querySelector('#add-first').addEventListener('click', () => {
+  //   addTask(false);
+  // });
   
-  document.querySelector('#add-last').addEventListener('click', () => {
-    addTask(true);
-  });
+  // document.querySelector('#add-last').addEventListener('click', () => {
+  //   addTask(true);
+  // });
 
   const formButton = document.querySelector('#create-task button');
 document.querySelector('#create-task').addEventListener('submit', (event) => {
@@ -127,6 +141,7 @@ document.querySelector('#create-task').addEventListener('submit', (event) => {
   };
   createTaskNode(task, false);
 
+
   event.target.reset();
   formButton.disabled = true;
 
@@ -140,3 +155,4 @@ const taskTextNode = document.querySelector('[name=taskText]');
 taskTextNode.addEventListener('input', function (event) {
   formButton.disabled = event.target.value === '';
 });
+
