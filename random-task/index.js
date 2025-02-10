@@ -60,10 +60,12 @@ function createTaskNode(task, addToEnd) {
     console.log('hola', task.text);
   });
 
+  // creo una función para que se actualicen los cambios de estado de las tareas y las mapeamos para crear otro array si los estados han cambiado
+
   function updateTaskStorage (taskId, updates) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const updatedTasks = tasks.map(task =>
-      task.id === taskId ? {...task, ...updates} : task   // si el id de la tarea coincide, entonces copiamos los datos de la tarea que no han cambiado y actualizamos los atos que han cambiado. Si el id no coincide deja la tarea como estaba. 
+      task.id === taskId ? {...task, ...updates} : task   // si el id de la tarea coincide, entonces copiamos los datos de la tarea que no han cambiado y actualizamos los datos que han cambiado. Si el id no coincide deja la tarea como estaba. 
     );
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
