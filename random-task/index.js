@@ -129,7 +129,7 @@ function createTaskNode(task, addToEnd) {
   // });
 
   const formButton = document.querySelector('#create-task button');
-document.querySelector('#create-task').addEventListener('submit', (event) => {
+  document.querySelector('#create-task').addEventListener('submit', (event) => {
   console.log(event);
   event.preventDefault();
 
@@ -157,4 +157,6 @@ const taskTextNode = document.querySelector('[name=taskText]');
 taskTextNode.addEventListener('input', function (event) {
   formButton.disabled = event.target.value === '';
 });
+
+
 
