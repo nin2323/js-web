@@ -148,7 +148,7 @@ document.querySelector('#create-task').addEventListener('submit', (event) => {
   formButton.disabled = true;
 
   const tasks = JSON.parse(localStorage.getItem('tasks')) || []; // si existe una tarea con clave 'tasks' me la devuelve, sino me da un array vacio
-  tasks.push(task);  // con el push conseguimos que se pueda añadir otra tarea sin sobrescribir la anterior
+  tasks.push(task);  // con el push conseguimos que se pueda añadir otra tarea sin sobrescribir la anterior // mejor poner unshift
 
   localStorage.setItem('tasks', JSON.stringify(tasks));
 });
