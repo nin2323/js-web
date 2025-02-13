@@ -123,7 +123,7 @@ const addPerrico = async (addToStart) => {
 
 
 
-document.querySelector('select').addEventListener('click', () =>{
+document.querySelector('.select').addEventListener('click', () =>{
   addPerrico()
 })
 
