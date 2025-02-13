@@ -59,8 +59,15 @@ function renderPerricoArray() {
   addSocialListeners();
 }
 
+
 const addPerrico = async (addToStart) => {
-  const perricoImg = await getRandomDogImage();
+  document.querySelector('#add-1-perrico').disabled = true;
+
+  const breed = document.querySelector('select').value;
+  
+  const perricoImg = await getBreeds(breed);
+
+  
 
   if (addToStart) {
     perricosArray.unshift(perricoImg);
@@ -111,11 +118,18 @@ const addPerrico = async (addToStart) => {
     likeCountNode.innerText = Number(likeCountNode.innerText) + 1;
   });
 
+  document.querySelector('#add-1-perrico').disabled = false;
 };
+
+
+
+document.querySelector('select').addEventListener('click', () =>{
+  addPerrico()
+})
 
 document.querySelector('#add-1-perrico').addEventListener('click', function () {
   clearWarningMessage();
-
+  
   addPerrico();
 });
 
