@@ -120,7 +120,7 @@ document.querySelector('#breed-filter').addEventListener('change', function() {
 function filterPerricosByBreed() {
   const selectedBreed = document.querySelector('#breed-filter').value;
   document.querySelectorAll('.card').forEach((perricoNode) => {
-    const dogBreed = perricoNode.querySelector('img').src.split('/')[4]; // Obtenemos la raza de la URL de la imagen
+    const dogBreed = perricoNode.querySelector('img').src.split('/')[4]; // Obtenemos la raza de la URL de la imagen con su posición
     if (selectedBreed === '' || dogBreed === selectedBreed) {
       perricoNode.style.display = '';
     } else {
