@@ -60,14 +60,46 @@ function renderPerricoArray() {
 }
 
 
+async function allList() {
+  const select = document.getElementById("breed-select");
+
+  try {
+      const response = await fetch("https://dog.ceo/api/breeds/list/all");
+      const data = await response.json();
+
+      select.innerHTML = ""; 
+
+      // Convertir el objeto en array y recorrerlo
+      Object.keys(data.message).forEach(breed => {     // con object.keys obtenemos las claves del objeto
+          const option = document.createElement("option"); // creamos un nuevo elemento 'option' en cada iteracion del foreach
+          option.value = breed;
+          option.textContent = breed.charAt(0).toUpperCase() + breed.slice(1);  // de esta manera obtenemos la primera letra de la raza y la pasamos a mayuscula, despues le ponemos el resto de la palabra
+          select.appendChild(option);  // appenchild para crear el siguiente option al final
+      });
+
+  } catch (error) {
+      console.error("Error al cargar razas", error);
+      select.innerHTML = "<option>Error al cargar razas</option>";
+  };
+}
+
+// Cargar razas cuando se carga la página
+document.addEventListener("DOMContentLoaded", allList);
+
 const addPerrico = async (addToStart) => {
   document.querySelector('#add-1-perrico').disabled = true;
 
-  const breed = document.querySelector('select').value;
+  const breed = document.querySelector('#breed-select').value;
   
-  const perricoImg = await getBreeds(breed);
+  
 
-  
+  if (!breed) {
+    alert('Por favor selecciona una raza antes de añadir un perrito');
+    document.querySelector('#add-1-perrico').disabled = false;
+    return;
+  }
+
+  const perricoImg = await getBreeds(breed);
 
   if (addToStart) {
     perricosArray.unshift(perricoImg);
@@ -123,7 +155,7 @@ const addPerrico = async (addToStart) => {
 
 
 
-document.querySelector('.select').addEventListener('change', () =>{
+document.querySelector('#breed-select').addEventListener('change', () =>{
   addPerrico()
 })
 
