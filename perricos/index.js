@@ -59,6 +59,7 @@ function renderPerricoArray() {
   addSocialListeners();
 }
 
+// selects de razas
 
 async function allList() {
   const select = document.getElementById("breed-select");
@@ -73,7 +74,7 @@ async function allList() {
       Object.keys(data.message).forEach(breed => {     // con object.keys obtenemos las claves del objeto
           const option = document.createElement("option"); // creamos un nuevo elemento 'option' en cada iteracion del foreach
           option.value = breed;
-          option.textContent = breed.charAt(0).toUpperCase() + breed.slice(1);  // de esta manera obtenemos la primera letra de la raza y la pasamos a mayuscula, despues le ponemos el resto de la palabra
+          option.textContent = breed;
           select.appendChild(option);  // appenchild para crear el siguiente option al final
       });
 
@@ -99,7 +100,7 @@ async function breedsFilter() {
     Object.keys(data.message).forEach(breed => {
       const option = document.createElement("option");
       option.value = breed;
-      option.textContent = breed.charAt(0).toUpperCase() + breed.slice(1);  
+      option.textContent = breed  
       select.appendChild(option);
     });
   } catch (error) {
@@ -110,12 +111,14 @@ async function breedsFilter() {
 // Llamar a esta función para cargar las razas cuando la página se cargue
 document.addEventListener("DOMContentLoaded", breedsFilter);
 
+//filtrar razas
+
 document.querySelector('#breed-filter').addEventListener('change', function() {
   filterPerricosByBreed();
 })
 
 function filterPerricosByBreed() {
-  const selectedBreed = document.querySelector('#breed-filter').value.toLowerCase();
+  const selectedBreed = document.querySelector('#breed-filter').value;
   document.querySelectorAll('.card').forEach((perricoNode) => {
     const dogBreed = perricoNode.querySelector('img').src.split('/')[4]; // Obtenemos la raza de la URL de la imagen
     if (selectedBreed === '' || dogBreed === selectedBreed) {
