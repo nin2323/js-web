@@ -97,8 +97,8 @@ async function breedsFilter() {
     select.innerHTML = "<option value=''>Razas...</option>";  // Establece la opción por defecto
 
     // Convertir el objeto en un array de razas y añadirlas al select
-    Object.keys(data.message).forEach(breed => {
-      const option = document.createElement("option");
+    Object.keys(data.message).forEach(breed => {     // con object.keys obtenemos las claves del objeto
+      const option = document.createElement("option");  // creamos un nuevo elemento 'option' en cada iteracion del foreach
       option.value = breed;
       option.textContent = breed  
       select.appendChild(option);
