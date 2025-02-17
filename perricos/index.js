@@ -67,7 +67,7 @@ async function allList() {
       const response = await fetch("https://dog.ceo/api/breeds/list/all");
       const data = await response.json();
 
-      select.innerHTML = ""; 
+      select.innerHTML = "<option value=''>Razas...</option>"; 
 
       // Convertir el objeto en array y recorrerlo
       Object.keys(data.message).forEach(breed => {     // con object.keys obtenemos las claves del objeto
@@ -85,6 +85,47 @@ async function allList() {
 
 // Cargar razas cuando se carga la página
 document.addEventListener("DOMContentLoaded", allList);
+
+async function breedsFilter() {
+  const select = document.getElementById("breed-filter");
+
+  try {
+    const response = await fetch("https://dog.ceo/api/breeds/list/all");
+    const data = await response.json();
+
+    select.innerHTML = "<option value=''>Razas...</option>";  // Establece la opción por defecto
+
+    // Convertir el objeto en un array de razas y añadirlas al select
+    Object.keys(data.message).forEach(breed => {
+      const option = document.createElement("option");
+      option.value = breed;
+      option.textContent = breed.charAt(0).toUpperCase() + breed.slice(1);  
+      select.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error al cargar razas", error);
+    select.innerHTML = "<option>Error al cargar razas</option>";
+  }
+}
+// Llamar a esta función para cargar las razas cuando la página se cargue
+document.addEventListener("DOMContentLoaded", breedsFilter);
+
+document.querySelector('#breed-filter').addEventListener('change', function() {
+  filterPerricosByBreed();
+})
+
+function filterPerricosByBreed() {
+  const selectedBreed = document.querySelector('#breed-filter').value.toLowerCase();
+  document.querySelectorAll('.card').forEach((perricoNode) => {
+    const dogBreed = perricoNode.querySelector('img').src.split('/')[4]; // Obtenemos la raza de la URL de la imagen
+    if (selectedBreed === '' || dogBreed === selectedBreed) {
+      perricoNode.style.display = '';
+    } else {
+      perricoNode.style.display = 'none';
+    }
+  });
+}
+
 
 const addPerrico = async (addToStart) => {
   document.querySelector('#add-1-perrico').disabled = true;
