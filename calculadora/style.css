@@ -7,7 +7,6 @@ body {
 
 .calculator {
     width: 250px;
-    height: 50%;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -32,6 +31,10 @@ body {
 button {
     width: 23%;
     height: 50px;
+}
+
+button:nth-child(17){
+    width: 100%;
 }
 
 
