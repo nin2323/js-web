@@ -33,8 +33,13 @@ button {
     height: 50px;
 }
 
-button:nth-child(17){
+.delate {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
 }
 
-
+.delate button {
+    width: 48%;
+    height: 50px;
+}
